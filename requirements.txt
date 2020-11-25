@@ -1,0 +1,3 @@
+pyyaml
+django-dotenv
+boto3

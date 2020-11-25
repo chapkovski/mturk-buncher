@@ -1,9 +1,10 @@
+#!/usr/bin/env python3
 import boto3
 from os import environ
 import dotenv
 import yaml
 import sys
-from .utils import AttrDict, printj
+from utils import AttrDict, printj
 import json
 import pathlib, os
 BASE_PATH = pathlib.Path(__file__).parent.absolute()
@@ -13,7 +14,7 @@ from jinja2 import Environment, FileSystemLoader
 
 
 with open(r'./data/qs.yaml') as file:
-    QS = yaml.load(file, Loader=yaml.FullLoader)
+    qs = yaml.load(file, Loader=yaml.FullLoader)
 
 dotenv.read_dotenv()
 
@@ -37,29 +38,34 @@ def get_mturk_client(*, use_sandbox=True):
         region_name='us-east-1',
     )
 
-#
+
 mturk_client = get_mturk_client(use_sandbox=True)
 printj(mturk_client.get_account_balance())
 
-target = 'Everything is wonderful'
+def make_hit_from_template(item):
+    file_loader = FileSystemLoader('templates')
+    env = Environment(loader=file_loader)
 
-file_loader = FileSystemLoader('templates')
-env = Environment(loader=file_loader)
+    template = env.get_template('q.html')
 
-template = env.get_template('q.html')
+    html_question = template.render(dict(item=item))
 
-html_question = template.render(dict(target=target))
+    mturk_hit_parameters = {
+        'Title': 'mturk_settings.title',
+        'Description': 'mturk_settings.description',
+        'Keywords': 'keywords',
+        'MaxAssignments': 1,
+        'Reward': '1',
+        'AssignmentDurationInSeconds': 6000,
+        'LifetimeInSeconds': int(60 * 60 * 1),
+        'Question': html_question,
+    }
+    #
+    hit = AttrDict(**mturk_client.create_hit(**mturk_hit_parameters)['HIT'])
+    return hit
 
-mturk_hit_parameters = {
-    'Title': 'mturk_settings.title',
-    'Description': 'mturk_settings.description',
-    'Keywords': 'keywords',
-    'MaxAssignments': 1,
-    'Reward': '1',
-    'AssignmentDurationInSeconds': 60,
-    'LifetimeInSeconds': int(60 * 60 * 1),
-    'Question': html_question,
-}
+for i in qs:
+    item = AttrDict(**i)
+    h = make_hit_from_template(item)
+    print(h.HITGroupId)
 
-hit = mturk_client.create_hit(**mturk_hit_parameters)['HIT']
-print(hit)

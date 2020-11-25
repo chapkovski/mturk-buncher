@@ -6,11 +6,11 @@
         <crowd-form>
           <crowd-classifier
             name="sentiment"
-            categories="['Positive', 'Negative', 'Neutral', 'N/A']"
+            categories="{{item.categories}}"
             header="What sentiment does this text convey?"
           >
             <classification-target>
-            {{target}}
+            {{item.target}}
             </classification-target>
 
             <full-instructions header="Sentiment Analysis Instructions">
