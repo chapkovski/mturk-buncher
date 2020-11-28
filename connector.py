@@ -7,6 +7,7 @@ import sys
 from utils import AttrDict, printj
 import json
 import pathlib, os
+import xml.etree.ElementTree as ET
 BASE_PATH = pathlib.Path(__file__).parent.absolute()
 
 from jinja2 import Environment, FileSystemLoader
@@ -40,7 +41,7 @@ def get_mturk_client(*, use_sandbox=True):
 
 
 mturk_client = get_mturk_client(use_sandbox=True)
-printj(mturk_client.get_account_balance())
+# printj(mturk_client.get_account_balance())
 
 def make_hit_from_template(item):
     file_loader = FileSystemLoader('templates')
@@ -51,8 +52,8 @@ def make_hit_from_template(item):
     html_question = template.render(dict(item=item))
 
     mturk_hit_parameters = {
-        'Title': 'mturk_settings.title',
-        'Description': 'mturk_settings.description',
+        'Title': 'NEW THING',
+        'Description': 'NEW NEW',
         'Keywords': 'keywords',
         'MaxAssignments': 1,
         'Reward': '1',
@@ -64,8 +65,16 @@ def make_hit_from_template(item):
     hit = AttrDict(**mturk_client.create_hit(**mturk_hit_parameters)['HIT'])
     return hit
 
-for i in qs:
-    item = AttrDict(**i)
-    h = make_hit_from_template(item)
-    print(h.HITGroupId)
+# for i in qs:
+#     item = AttrDict(**i)
+#     h = make_hit_from_template(item)
+#     print(h.HITId, h.HITGroupId)
+# https://workersandbox.mturk.com/mturk/preview?groupId=3LIIZRDE74HY9WQGTYFPU6YH8S0YTQ
+# print(mturk_client.list_hits())
+a = mturk_client.list_assignments_for_hit(HITId='34F34TZU7WZDP83S6DKG9DNN17MJ2Z')['Assignments'][0]['Answer']
 
+tree = ET.fromstring(a)
+print(tree)
+for child in tree:
+    print(child.tag, child.attrib)
+# print(mturk_client.list_assignments_for_hit(HITId='36FFXPMST9OV59X75BFS4DABPIKOH7'))

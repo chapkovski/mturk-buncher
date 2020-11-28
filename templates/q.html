@@ -1,38 +1,45 @@
 <HTMLQuestion xmlns="http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2011-11-11/HTMLQuestion.xsd">
-  <HTMLContent><![CDATA[
-    <!DOCTYPE html>
-      <body>
+    <HTMLContent><![CDATA[
+        <!DOCTYPE html>
+        <body>
         <script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
         <crowd-form>
-          <crowd-classifier
-            name="sentiment"
-            categories="{{item.categories}}"
-            header="What sentiment does this text convey?"
-          >
-            <classification-target>
-            {{item.target}}
-            </classification-target>
+            <crowd-input name="nextWord" label="Predicted word in the blank..."></crowd-input>
+            <p><strong>Instructions: </strong>Given a block of text, fill in the blank with the word you'd expect to be
+                there</p>
+            <p><strong>Block of text continue: </strong>whatever</p>
+            <crowd-input name="nextWord" label="Predicted word in the blank..."></crowd-input>
+            <crowd-input name="another one" label="HAHAHAHA..."></crowd-input>
+            <crowd-classifier
+                    name="sentiment"
+                    categories="{{item.categories}}"
+                    header="What sentiment does this text convey?"
+            >
+                <classification-target>
+                    {{item.target}}
+                </classification-target>
 
-            <full-instructions header="Sentiment Analysis Instructions">
-            <p><strong>Positive</strong>
-              sentiment include: joy, excitement, delight</p>
-            <p><strong>Negative</strong> sentiment include:
-              anger, sarcasm, anxiety</p>
-            <p><strong>Neutral</strong>: neither positive or
-              negative, such as stating a fact</p>
-            <p><strong>N/A</strong>: when the text cannot be
-              understood</p>
-            <p>When the sentiment is mixed, such as both joy and sadness,
-              use your judgment to choose the stronger emotion.</p>
-            </full-instructions>
+                <full-instructions header="Sentiment Analysis Instructions">
+                    <p><strong>Positive</strong>
+                        sentiment include: joy, excitement, delight</p>
+                    <p><strong>Negative</strong> sentiment include:
+                        anger, sarcasm, anxiety</p>
+                    <p><strong>Neutral</strong>: neither positive or
+                        negative, such as stating a fact</p>
+                    <p><strong>N/A</strong>: when the text cannot be
+                        understood</p>
+                    <p>When the sentiment is mixed, such as both joy and sadness,
+                        use your judgment to choose the stronger emotion.</p>
+                </full-instructions>
 
-            <short-instructions>
-             Choose the primary sentiment that is expressed by the text.
-            </short-instructions>
-          </crowd-classifier>
+                <short-instructions>
+                    Choose the primary sentiment that is expressed by the text.
+                </short-instructions>
+            </crowd-classifier>
         </crowd-form>
-      </body>
-    </html>
-  ]]></HTMLContent>
-  <FrameHeight>0</FrameHeight>
+        </body>
+        </html>
+        ]]>
+    </HTMLContent>
+    <FrameHeight>0</FrameHeight>
 </HTMLQuestion>
