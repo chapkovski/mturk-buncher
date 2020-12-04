@@ -68,14 +68,9 @@ def make_hit_from_template(item):
 
 
 hitid=input('Enter hit id:\n')
-# 3S37Y8CWI809Y6IEHQMJRIETNIY4WK
-"""
-/Users/chapkovski/.virtualenvs/mturk/bin/python /Users/chapkovski/documents/mturk/connector.py
-3J94SKDEKIPSLJMNE0034MVMGYND5P GOTO: https://workersandbox.mturk.com/mturk/preview?groupId=35DGDVUOGJ20H4X9CH65PWXKJPJYPP
-3Y3CZJSZ9KTMMT5SW1VN9BCQVZE5RN GOTO: https://workersandbox.mturk.com/mturk/preview?groupId=35DGDVUOGJ20H4X9CH65PWXKJPJYPP
-"""
+
 assignments = mturk_client.list_assignments_for_hit(HITId=hitid)['Assignments']
-print(assignments)
+
 answers = []
 answers_namespace = {'mt': 'http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionFormAnswers.xsd'}
 for assignment in assignments:
