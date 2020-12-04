@@ -1,0 +1,9 @@
+{% extends "base.jinja" %}
+{% block title %}
+{{data.title|markdown}}
+{% endblock %}
+{% block content %}
+
+<crowd-input name="{{data.name}}" label="{{data.label}}" required></crowd-input>
+
+{% endblock %}

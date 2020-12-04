@@ -1,0 +1,18 @@
+<h2>Question</h2>
+<p>
+    {% block title %}
+
+    {% endblock %}
+</p>
+{% if data.image %}
+    {% block image %}
+<crowd-card>
+      <div class="card">
+          <img src="{{ data.image }}" alt="Image here">
+      </div>
+    </crowd-card>
+    {% endblock %}
+{% endif %}
+{% block content %}
+
+{% endblock %}

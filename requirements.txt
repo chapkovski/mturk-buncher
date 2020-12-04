@@ -1,3 +1,4 @@
 pyyaml
 django-dotenv
 boto3
+markdown

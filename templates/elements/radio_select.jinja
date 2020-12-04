@@ -1,0 +1,7 @@
+<h2>Question</h2>
+<p>{{data.title|markdown}}</p>
+<crowd-radio-group>
+    {% for choice in data.choices %}
+        <crowd-radio-button name="{{choice.name}}" value="{{choice.value}}">{{choice.label}}</crowd-radio-button>
+    {% endfor %}
+</crowd-radio-group>
