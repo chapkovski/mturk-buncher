@@ -8,11 +8,10 @@ from utils import AttrDict, printj
 import json
 import pathlib, os
 import xml.etree.ElementTree as ET
+
 BASE_PATH = pathlib.Path(__file__).parent.absolute()
 
 from jinja2 import Environment, FileSystemLoader
-
-
 
 with open(r'./data/qs.yaml') as file:
     qs = yaml.load(file, Loader=yaml.FullLoader)
@@ -41,6 +40,8 @@ def get_mturk_client(*, use_sandbox=True):
 
 
 mturk_client = get_mturk_client(use_sandbox=True)
+
+
 # printj(mturk_client.get_account_balance())
 
 def make_hit_from_template(item):
@@ -52,8 +53,8 @@ def make_hit_from_template(item):
     html_question = template.render(dict(item=item))
 
     mturk_hit_parameters = {
-        'Title': 'ANOTHER THING',
-        'Description': 'NEW NEW VERY NEW',
+        'Title': 'NEW THING',
+        'Description': 'NEW NEW',
         'Keywords': 'keywords',
         'MaxAssignments': 1,
         'Reward': '1',
@@ -65,23 +66,18 @@ def make_hit_from_template(item):
     hit = AttrDict(**mturk_client.create_hit(**mturk_hit_parameters)['HIT'])
     return hit
 
-for i in qs:
-    item = AttrDict(**i)
-    h = make_hit_from_template(item)
-    print(h.HITId, 'GOTO:' ,f'https://workersandbox.mturk.com/mturk/preview?groupId={h.HITGroupId}')
-#     https://workersandbox.mturk.com/mturk/preview?groupId=35DGDVUOGJ20H4X9CH65PWXKJPJYPP
-# https://workersandbox.mturk.com/mturk/preview?groupId=3LIIZRDE74HY9WQGTYFPU6YH8S0YTQ
-# print(mturk_client.list_hits())
-# import xmltodict
-# a = mturk_client.list_assignments_for_hit(HITId='34F34TZU7WZDP83S6DKG9DNN17MJ2Z')['Assignments'][0]['Answer']
-# xml_doc = xmltodict.parse(a)
-# printj(dict(xml_doc))
-# # print(json.loads((xml_doc.get('QuestionFormAnswers').get('Answer').get('FreeText')))[0].keys())
-# sys.exit()
-# tree = ET.fromstring(a)
-# # print(tree)
-# print(tree.find('*/Answer'))
-# for child in tree:
-#     print(child.find('*/Answer'))
-#     print(child.tag, child.attrib)
-# print(mturk_client.list_assignments_for_hit(HITId='36FFXPMST9OV59X75BFS4DABPIKOH7'))
+
+hitid=input('Enter hit id:\n')
+# 3S37Y8CWI809Y6IEHQMJRIETNIY4WK
+"""
+/Users/chapkovski/.virtualenvs/mturk/bin/python /Users/chapkovski/documents/mturk/connector.py
+3J94SKDEKIPSLJMNE0034MVMGYND5P GOTO: https://workersandbox.mturk.com/mturk/preview?groupId=35DGDVUOGJ20H4X9CH65PWXKJPJYPP
+3Y3CZJSZ9KTMMT5SW1VN9BCQVZE5RN GOTO: https://workersandbox.mturk.com/mturk/preview?groupId=35DGDVUOGJ20H4X9CH65PWXKJPJYPP
+"""
+assignments = mturk_client.list_assignments_for_hit(HITId=hitid)['Assignments']
+answers = []
+answers_namespace = {'mt': 'http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionFormAnswers.xsd'}
+for assignment in assignments:
+    root = ET.fromstring(assignment['Answer'])
+    answers.extend(json.loads(root.find('mt:Answer', answers_namespace).find('mt:FreeText', answers_namespace).text))
+print(answers)

@@ -5,4 +5,11 @@
     - Negative
     - Neutral
     - N/A
+- target:
+    I am so happy
+  categories:
+    - Positive
+    - Negative
+    - Neutral
+    - N/A
 

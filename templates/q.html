@@ -4,39 +4,33 @@
         <body>
         <script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
         <crowd-form>
-            <crowd-input name="nextWord" label="Predicted word in the blank..."></crowd-input>
-            <p><strong>Instructions: </strong>Given a block of text, fill in the blank with the word you'd expect to be
-                there</p>
-            <p><strong>Block of text continue: </strong>whatever</p>
-            <crowd-input name="nextWord" label="Predicted word in the blank..."></crowd-input>
-            <crowd-input name="another one" label="HAHAHAHA..."></crowd-input>
-            <crowd-classifier
-                    name="sentiment"
-                    categories="{{item.categories}}"
-                    header="What sentiment does this text convey?"
-            >
-                <classification-target>
-                    {{item.target}}
-                </classification-target>
 
-                <full-instructions header="Sentiment Analysis Instructions">
-                    <p><strong>Positive</strong>
-                        sentiment include: joy, excitement, delight</p>
-                    <p><strong>Negative</strong> sentiment include:
-                        anger, sarcasm, anxiety</p>
-                    <p><strong>Neutral</strong>: neither positive or
-                        negative, such as stating a fact</p>
-                    <p><strong>N/A</strong>: when the text cannot be
-                        understood</p>
-                    <p>When the sentiment is mixed, such as both joy and sadness,
-                        use your judgment to choose the stronger emotion.</p>
-                </full-instructions>
+            <crowd-form>
+                <crowd-input name="tag1" label="Word/phrase 1" required></crowd-input>
+                <crowd-input name="tag2" label="Word/phrase 2" required></crowd-input>
+                <crowd-input name="tag3" label="Word/phrase 3" required></crowd-input>
+                <div>
+                    <p>Check this box if you like birds</p>
+                    <crowd-checkbox name="likeBirds" checked="true"></crowd-checkbox>
+                </div>
 
+                <div>
+                    <p>On a scale of 1-10, how much do you like birds?</p>
+                    <crowd-slider name="howMuch" min="1" max="10" step="1" pin="true" required></crowd-slider>
+                </div>
+
+                <div>
+                    <p>Write a short essay describing your favorite bird</p>
+                    <crowd-text-area name="essay" rows="4" placeholder="Lorem ipsum..." required></crowd-text-area>
+                </div>
                 <short-instructions>
-                    Choose the primary sentiment that is expressed by the text.
+                    Your custom quick instructions and examples
                 </short-instructions>
-            </crowd-classifier>
-        </crowd-form>
+
+                <full-instructions>
+                    Your custom detailed instracutions and more examples
+                </full-instructions>
+            </crowd-form>
         </body>
         </html>
         ]]>
