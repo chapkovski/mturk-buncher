@@ -1,0 +1,15 @@
+{% extends "base.jinja" %}
+{% block title %}
+    {{ data.title|markdown }}
+{% endblock %}
+{% block content %}
+    <div >
+        <select name="{{ data.name }}" style="font-size: large" required>
+            <option value="">(Please select)</option>
+            {% for choice in data.choices %}
+                <option value="{{ choice.value }}">{{ choice.label }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+{% endblock %}

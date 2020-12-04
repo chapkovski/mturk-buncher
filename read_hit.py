@@ -75,6 +75,7 @@ hitid=input('Enter hit id:\n')
 3Y3CZJSZ9KTMMT5SW1VN9BCQVZE5RN GOTO: https://workersandbox.mturk.com/mturk/preview?groupId=35DGDVUOGJ20H4X9CH65PWXKJPJYPP
 """
 assignments = mturk_client.list_assignments_for_hit(HITId=hitid)['Assignments']
+print(assignments)
 answers = []
 answers_namespace = {'mt': 'http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionFormAnswers.xsd'}
 for assignment in assignments:

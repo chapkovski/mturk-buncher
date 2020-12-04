@@ -73,22 +73,23 @@ def make_hit_from_template(survey):
 
     template = main_env.get_template('q.html')
     form_elements = []
-    for q in survey:
+    for q in survey.questions:
         form_elements.append( render_question(AttrDict(**q)))
     html_question = template.render(dict(form_elements=form_elements))
+
     # We may need to take the title and description and keywords and all other params from the survey file.
     # Let's keep it simple so far
     mturk_hit_parameters = {
-        'Title': 'HIT TITLE',
-        'Description': 'HIT DESCRIPTION',
-        'Keywords': 'keywords',
+        'Title': survey.title,
+        'Description': survey.description,
+        'Keywords': survey.keywords,
         'MaxAssignments': 1,
         'Reward': '1',
         'AssignmentDurationInSeconds': 6000,
         'LifetimeInSeconds': int(60 * 60 * 1),
         'Question': html_question,
     }
-    #
+
     hit = AttrDict(**mturk_client.create_hit(**mturk_hit_parameters)['HIT'])
     return hit
 
@@ -96,6 +97,7 @@ def make_hit_from_template(survey):
 survey_file ='qs.yaml'
 with open(f'./data/{survey_file}') as file:
     survey = yaml.load(file, Loader=yaml.FullLoader)
-
+survey = AttrDict(**survey)
 h = make_hit_from_template(survey)
-print('HIT id:', h.HITId, 'GOTO:', f'https://workersandbox.mturk.com/mturk/preview?groupId={h.HITGroupId}')
+if h:
+    print('HIT id:', h.HITId, 'GOTO:', f'https://workersandbox.mturk.com/mturk/preview?groupId={h.HITGroupId}')
