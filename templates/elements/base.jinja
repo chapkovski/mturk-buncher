@@ -6,11 +6,31 @@
 </p>
 {% if data.image %}
     {% block image %}
-<crowd-card>
-      <div class="card">
-          <img src="{{ data.image }}" alt="Image here">
-      </div>
-    </crowd-card>
+        <style>
+            .myimg {
+                max-width: 100%;
+                max-height: 100%;
+                display: block;
+            }
+
+            .imgcard {
+                width: 250px;
+
+            }
+        </style>
+        <div class="card">
+            <div class="card-body imgcard">
+
+                <img
+                        class="myimg"
+                        src="{{ data.image.src }}"
+                        height="{{ data.image.height }}"
+                        width="{{ data.image.width }}"
+                        alt="Image here">
+            </div>
+        </div>
+
+
     {% endblock %}
 {% endif %}
 {% block content %}

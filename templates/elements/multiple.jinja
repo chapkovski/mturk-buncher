@@ -1,0 +1,22 @@
+{% extends "base.jinja" %}
+{% block title %}
+    {{ data.title|markdown }}
+{% endblock %}
+{% block content %}
+    {% for choice in data.choices %}
+        <div>
+
+            <input type="checkbox" id="{{ choice.value }}"
+                   name="{{ data.name }}"
+                   value="{{ choice.value }}">
+            <label for="{{ choice.value }}">
+                {{ choice.label }}
+            </label>
+        </div>
+
+
+    {% endfor %}
+
+
+
+{% endblock %}

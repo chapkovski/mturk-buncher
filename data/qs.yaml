@@ -5,11 +5,33 @@ description:
 keywords:
   keyword1, keyword 2
 
+
+
 questions:
+  - qtype:
+      multiple
+    params:
+      name: singers
+      title:
+        "What's your favorite singer (choose many if you want)?"
+      choices:
+        - Bon Jovi
+        - Michael Jackson
+        - David Bowy
+        - Egor Letov
+      exclusion_category: none of the above
+
   - qtype:
       radio_select
     params:
       name: profession
+#      image can be just a link
+#      image: https://i.etsystatic.com/6333298/r/il/f9bece/1265756662/il_794xN.1265756662_ravj.jpg
+#      OR IT CAN BE LIKE:
+      image:
+        src: https://i.etsystatic.com/6333298/r/il/f9bece/1265756662/il_794xN.1265756662_ravj.jpg
+        width: 200px
+        height: auto
       title:
         What's your favorite [profession](https://en.wikipedia.org/wiki/profession)?
       choices:

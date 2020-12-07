@@ -3,11 +3,14 @@ import boto3
 from os import environ
 import dotenv
 import yaml
-from utils import AttrDict
+from utils.objs import AttrDict
+from utils.newtab import NewTabExtension
 import pathlib, os
 import markdown
 
-md = markdown.Markdown(extensions=['meta'])
+IMG_DEFAULT_HEIGHT = '100px' # todo: move it to constants
+
+md = markdown.Markdown(extensions=['meta', NewTabExtension()])
 
 BASE_PATH = pathlib.Path(__file__).parent.absolute()
 
@@ -35,8 +38,13 @@ def render_question(item):
     params = AttrDict(**item.params)
 
     if hasattr(params, 'choices') and isinstance(params.choices, list):
+        params.choice_list = params.choices # we store for crowd-classifier/multiple select only
         params.choices = expand_choices(params.choices)
-        item.params = params
+
+    if hasattr(params, 'image') and isinstance(params.image, str):
+
+        params.image = dict(src=params.image, height=IMG_DEFAULT_HEIGHT, width='auto')
+    item.params = params
     html_question = template.render(dict(data=item.params))
     return html_question
 
@@ -74,7 +82,7 @@ def make_hit_from_template(survey):
     template = main_env.get_template('q.html')
     form_elements = []
     for q in survey.questions:
-        form_elements.append( render_question(AttrDict(**q)))
+        form_elements.append(render_question(AttrDict(**q)))
     html_question = template.render(dict(form_elements=form_elements))
     with open('_temp.html', 'w') as filehandle:
         filehandle.write(html_question)
@@ -95,8 +103,9 @@ def make_hit_from_template(survey):
     hit = AttrDict(**mturk_client.create_hit(**mturk_hit_parameters)['HIT'])
     return hit
 
+
 # here we change the file name that points to the survey
-survey_file ='qs.yaml'
+survey_file = 'qs.yaml'
 with open(f'./data/{survey_file}') as file:
     survey = yaml.load(file, Loader=yaml.FullLoader)
 survey = AttrDict(**survey)

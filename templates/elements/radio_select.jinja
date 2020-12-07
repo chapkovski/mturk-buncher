@@ -1,5 +1,9 @@
-<h2>Question</h2>
-<p>{{ data.title|markdown }}</p>
+{% extends "base.jinja" %}
+{% block title %}
+    {{ data.title|markdown }}
+{% endblock %}
+{% block content %}
+
 <crowd-radio-group>
     {% for choice in data.choices %}
         <div>
@@ -34,3 +38,4 @@
 
     </script>
 {% endif %}
+{% endblock %}
