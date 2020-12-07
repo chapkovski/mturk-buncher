@@ -18,31 +18,36 @@ questions:
         - scientist
         - actor
         - teacher
-  - qtype:
-      slidebar
-    params:
-      name: starwarslove
-      title:
-        On a scale from 0 to 10, how much do you like Star-Wars?
-      min: 0
-      max: 25
-      step: 2
-  - qtype:
-      free-text
-    params:
-      image: https://i.etsystatic.com/6333298/r/il/f9bece/1265756662/il_794xN.1265756662_ravj.jpg
-      title: What's your favorite [national park](https://en.wikipedia.org/wiki/List_of_national_parks_of_the_United_States)?
-      name: national_park
-      label: Type the name of your national park here
-
-  - qtype:
-      dropdown
-    params:
-      name: dropdown1example
-      title: What would you like to do
-      choices:
-        - dance
-        - work
-        - sleep
-        - rest
-        - watch movies
+        - other
+      other:
+        pointer: other
+        label: Type here the profession that you love the most
+        name: other_profession
+#  - qtype:
+#      slidebar
+#    params:
+#      name: starwarslove
+#      title:
+#        On a scale from 0 to 10, how much do you like Star-Wars?
+#      min: 0
+#      max: 25
+#      step: 2
+#  - qtype:
+#      free-text
+#    params:
+#      image: https://i.etsystatic.com/6333298/r/il/f9bece/1265756662/il_794xN.1265756662_ravj.jpg
+#      title: What's your favorite [national park](https://en.wikipedia.org/wiki/List_of_national_parks_of_the_United_States)?
+#      name: national_park
+#      label: Type the name of your national park here
+#
+#  - qtype:
+#      dropdown
+#    params:
+#      name: dropdown1example
+#      title: What would you like to do
+#      choices:
+#        - dance
+#        - work
+#        - sleep
+#        - rest
+#        - watch movies

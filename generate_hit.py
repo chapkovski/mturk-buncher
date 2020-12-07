@@ -76,7 +76,9 @@ def make_hit_from_template(survey):
     for q in survey.questions:
         form_elements.append( render_question(AttrDict(**q)))
     html_question = template.render(dict(form_elements=form_elements))
-
+    with open('_temp.html', 'w') as filehandle:
+        filehandle.write(html_question)
+    return
     # We may need to take the title and description and keywords and all other params from the survey file.
     # Let's keep it simple so far
     mturk_hit_parameters = {

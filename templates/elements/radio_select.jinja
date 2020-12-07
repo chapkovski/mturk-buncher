@@ -1,7 +1,36 @@
 <h2>Question</h2>
-<p>{{data.title|markdown}}</p>
+<p>{{ data.title|markdown }}</p>
 <crowd-radio-group>
     {% for choice in data.choices %}
-        <crowd-radio-button name="{{data.name}}" value="{{choice.value}}">{{choice.label}}</crowd-radio-button>
+        <div>
+            <input type="radio" id="male"
+                   id="{{ choice.value }}"
+                   name="{{ data.name }}"
+                   value="{{ choice.value }}"
+                    {% if data.other %}
+                   onclick="{{ data.name }}_select(this)"
+                    {% endif %}
+            >
+            <label for="{{ choice.value }}">
+                {{ choice.label }}
+            </label>
+        </div>
+
     {% endfor %}
 </crowd-radio-group>
+{% if data.other %}
+    {% include 'other.jinja' %}
+    <script>
+        function {{ data.name }}_select(el) {
+            const otherWrapper = $("#{{data.other.name}}_wrapper");
+            if (el.value === "{{ data.other.pointer }}") {
+                otherWrapper.show();
+                $('crowd-input[name="{{data.other.name}}"]').prop("required", true);
+            } else {
+                otherWrapper.hide();
+                $('crowd-input[name="{{data.other.name}}"]').prop("required", false);
+            }
+        }
+
+    </script>
+{% endif %}
