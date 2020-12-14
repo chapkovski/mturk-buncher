@@ -1,5 +1,6 @@
 .env
 /data/*
 !/data/qs.yaml
+!/data/config.yaml
 .idea/
 _temp.html

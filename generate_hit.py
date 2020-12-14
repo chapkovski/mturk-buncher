@@ -24,7 +24,7 @@ with open(r'./data/qs.yaml') as file:
 with open(r'./data/config.yaml') as file:
     config = AttrDict(**yaml.load(file, Loader=yaml.FullLoader))
 IMG_DEFAULT_HEIGHT = config.IMG_DEFAULT_HEIGHT
-sys.exit()
+
 
 def expand_choices(l):
     if not l:
@@ -39,6 +39,7 @@ def expand_choices(l):
 def render_question(item):
     template = env.get_template(f'{item.qtype}.jinja')
     params = AttrDict(**item.params)
+    params.setdefault('required',config.required_default)
 
     if hasattr(params, 'choices') and isinstance(params.choices, list):
         params.choice_list = params.choices  # we store for crowd-classifier/multiple select only
