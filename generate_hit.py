@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 
 import yaml
+import sys
 from utils.objs import AttrDict
 from utils.newtab import NewTabExtension
 import pathlib
 import markdown
 from connector import  get_mturk_client
 
-IMG_DEFAULT_HEIGHT = '100px'  # todo: move it to constants
+
 
 md = markdown.Markdown(extensions=['meta', NewTabExtension()])
 
@@ -20,7 +21,10 @@ env = Environment(loader=file_loader)
 env.filters['markdown'] = lambda text: Markup(md.convert(text))
 with open(r'./data/qs.yaml') as file:
     qs = yaml.load(file, Loader=yaml.FullLoader)
-
+with open(r'./data/config.yaml') as file:
+    config = AttrDict(**yaml.load(file, Loader=yaml.FullLoader))
+IMG_DEFAULT_HEIGHT = config.IMG_DEFAULT_HEIGHT
+sys.exit()
 
 def expand_choices(l):
     if not l:
@@ -90,16 +94,3 @@ for  i in range(1):
     h = make_hit_from_template(survey)
     if h:
         print('HIT id:', h.HITId, 'GOTO:', f'https://workersandbox.mturk.com/mturk/preview?groupId={h.HITGroupId}')
-#
-# mturk_client.update_notification_settings(
-#     HITTypeId='33GOZHXTK6U9FW6DAUDI5D1QPNXSF7',
-#     Notification={
-#         'Destination': 'chapkovski@gmail.com',
-#         'Transport': 'Email',
-#         'Version': '2006-05-05',
-#         'EventTypes': [
-#             'AssignmentAccepted','AssignmentAbandoned','AssignmentReturned','AssignmentSubmitted',
-#         ]
-#     },
-#     Active=True
-# )
