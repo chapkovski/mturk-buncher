@@ -1,5 +1,11 @@
 <hr>
-<div class="title">
+<div class="title d-flex align-items-baseline">
+    {% block qid %}
+        {% if data.qid %}
+            <span class="qid mr-2">{{ data.qid }}:</span>
+        {% endif %}
+
+    {% endblock %}
     {% block title %}
 
     {% endblock %}
@@ -36,3 +42,4 @@
 {% block content %}
 
 {% endblock %}
+

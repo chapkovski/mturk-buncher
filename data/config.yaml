@@ -1,2 +1,3 @@
-default_required: True
+required_default: true
 IMG_DEFAULT_HEIGHT: 100px
+required_msg: This field is required

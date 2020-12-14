@@ -4,7 +4,8 @@
 {% endblock %}
 {% block content %}
     <div >
-        <select name="{{ data.name }}" style="font-size: large" required>
+        <select name="{{ data.name }}" style="font-size: large"
+         {{ "required" if data.required }}>
             <option value="">(Please select)</option>
             {% for choice in data.choices %}
                 <option value="{{ choice.value }}">{{ choice.label }}</option>

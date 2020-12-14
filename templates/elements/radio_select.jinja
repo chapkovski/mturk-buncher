@@ -18,9 +18,7 @@
                     {% if data.other %}
                    onclick="{{ data.name }}_select(this)"
                     {% endif %}
-                    {% if data.required %}
-                   required
-                    {% endif %}
+                    {{ "required" if data.required }}
             >
             <label for="{{ choice.value }}">
                 {{ choice.label }}

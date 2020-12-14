@@ -1,11 +1,19 @@
 {% extends "base.jinja" %}
 {% block title %}
-{{data.title|markdown}}
+    {{ data.title|markdown }}
 {% endblock %}
 {% block content %}
 
-<crowd-input name="{{data.name}}" label="{{data.label}}" pattern="{{ data.pattern }}" required
-             error-message="{{ data.error_message }}" type="{{ type|default('text') }}"
-></crowd-input>
+    <crowd-input name="{{ data.name }}" label="{{ data.label }}"
+            {% if data.pattern %}
+                 pattern="{{ data.pattern }}"
+            {% endif %}
+            {{ "required" if data.required }}
+            {% if  data.error_message %}
+                 error-message="{{ data.error_message }}"
+            {% endif %}
+
+                 type="{{ type|default('text') }}"
+    ></crowd-input>
 
 {% endblock %}

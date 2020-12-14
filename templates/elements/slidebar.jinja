@@ -1,3 +1,32 @@
-<h2>Question</h2>
-<p>{{data.title|markdown}}</p>
-<crowd-slider name="howMuch" min="{{data.min}}" max="{{data.max}}" step="{{data.step}}" pin="true" required></crowd-slider>
+{% extends "base.jinja" %}
+{% block title %}
+    {{ data.title|markdown }}
+{% endblock %}
+{% block content %}
+
+
+    <div class="">
+
+        <div class="my-2">
+            <input type="text" class="js-range-slider" value="" id="{{ data.name }}"
+                   name="{{ data.name }}"/>
+        </div>
+        <script>
+            const sliderStep ={{ data.step|default('null') }};
+            const sliderMin = {{data.min}};
+            const sliderMax = {{data.max}};
+            const sliderMid = (sliderMin + sliderMax) / 2;
+
+            $("#{{ data.name }}").ionRangeSlider({
+                min: {{data.min}},
+                max: {{data.max}},
+                step: sliderStep,
+                from: sliderMid,
+                skin: "big"
+            });
+
+        </script>
+
+
+    </div>
+{% endblock %}
