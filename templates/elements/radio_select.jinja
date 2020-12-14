@@ -5,14 +5,21 @@
 {% block content %}
 
 <crowd-radio-group>
+    <style>.radiowrapper{
+        padding:0px;
+        margin:0px;
+    }</style>
     {% for choice in data.choices %}
-        <div>
+        <div class="radiowrapper">
             <input type="radio" id="male"
                    id="{{ choice.value }}"
                    name="{{ data.name }}"
                    value="{{ choice.value }}"
                     {% if data.other %}
                    onclick="{{ data.name }}_select(this)"
+                    {% endif %}
+                    {% if data.required %}
+                   required
                     {% endif %}
             >
             <label for="{{ choice.value }}">

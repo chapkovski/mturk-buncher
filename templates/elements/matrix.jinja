@@ -1,0 +1,42 @@
+{% extends "base.jinja" %}
+{% block title %}
+    {{ data.title|markdown }}
+{% endblock %}
+{% block content %}
+
+    <table class="table table-hover table-stripped table-sm">
+        <thead>
+        <th>
+
+        </th>
+        {% for column in data.columns %}
+            <th>{{ column }}</th>
+        {% endfor %}
+        </thead>
+        <tbody>
+        {% for row in data.rows %}
+            <tr>
+                <th>
+                    {{ row }}
+                </th>
+                {% for column in data.columns %}
+                    <td>
+                        <input type="checkbox" id="id_{{ row }}_{{ column }}"
+                               name="{{ row }}_{{ column }}"
+                               value="{{ row }}_{{ column }}">
+                    </td>
+                {% endfor %}
+            </tr>
+
+
+
+
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+
+
+{% endblock %}

@@ -4,7 +4,7 @@ from os import environ
 import dotenv
 import yaml
 import sys
-from utils import AttrDict, printj
+from utils.objs import AttrDict, printj
 import json
 import pathlib, os
 import xml.etree.ElementTree as ET
@@ -66,14 +66,21 @@ def make_hit_from_template(item):
     hit = AttrDict(**mturk_client.create_hit(**mturk_hit_parameters)['HIT'])
     return hit
 
+hits = [
+    # '3XQ4XW3OD9C6OBMIT7TU1EEAXX3S26',
+    # '3UEDKCTP9VQFMT6GUA1N6J48RJCK7X',
+    # '3OB6JN3A9QPKU0QYO0C9QDNCH01MR3',
+    '3JYPJ2TAYI8TCDI2PL47QS3OJH1PF7',
+    # '3IHWR4LC7DDSGCLB4C8H73LQAZTI87'
+]
+for hitid in hits:
+# hitid=input('Enter hit id:\n')
+    print( mturk_client.list_assignments_for_hit(HITId=hitid))
+    assignments = mturk_client.list_assignments_for_hit(HITId=hitid)['Assignments']
 
-hitid=input('Enter hit id:\n')
-
-assignments = mturk_client.list_assignments_for_hit(HITId=hitid)['Assignments']
-
-answers = []
-answers_namespace = {'mt': 'http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionFormAnswers.xsd'}
-for assignment in assignments:
-    root = ET.fromstring(assignment['Answer'])
-    answers.extend(json.loads(root.find('mt:Answer', answers_namespace).find('mt:FreeText', answers_namespace).text))
-print(answers)
+    answers = []
+    answers_namespace = {'mt': 'http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionFormAnswers.xsd'}
+    for assignment in assignments:
+        root = ET.fromstring(assignment['Answer'])
+        answers.extend(json.loads(root.find('mt:Answer', answers_namespace).find('mt:FreeText', answers_namespace).text))
+    print(answers)

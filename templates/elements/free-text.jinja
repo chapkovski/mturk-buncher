@@ -4,6 +4,8 @@
 {% endblock %}
 {% block content %}
 
-<crowd-input name="{{data.name}}" label="{{data.label}}" required></crowd-input>
+<crowd-input name="{{data.name}}" label="{{data.label}}" pattern="{{ data.pattern }}" required
+             error-message="{{ data.error_message }}" type="{{ type|default('text') }}"
+></crowd-input>
 
 {% endblock %}

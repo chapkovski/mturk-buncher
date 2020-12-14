@@ -1,13 +1,24 @@
 title:
-  My Hit
+  HIT EXAMPLE 222
 description:
   My Hit Description
 keywords:
   keyword1, keyword 2
 
 
-
 questions:
+  - qtype:
+      multiple
+    params:
+      name: singers
+      title:
+        "What's your favorite singer (choose many if you want)?"
+      choices:
+        - Bon Jovi
+        - Michael Jackson
+        - David Bowy
+        - Egor Letov
+      exclusion_category: none of the above
   - qtype:
       multiple
     params:
