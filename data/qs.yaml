@@ -33,6 +33,33 @@ questions:
       min: 0
       max: 10
       step: 1
+  - qtype:
+      free-text
+    params:
+      name: state
+      pattern: '^[a-zA-Z]{1,2}$'
+      error_message: please type a TWO-LETTER state abbreviation
+      title: 'Please provide the two-letter abbreviation of the US state that you live in:'
+  - qtype:
+      number
+    params:
+      name: age
+      title: What is your age?
+  - qtype:
+      matrix
+    params:
+      name: check_matrix
+      title:
+        "Matrix"
+      rows:
+        - 1
+        - 2
+        - 3
+        - 4
+      columns:
+        - a
+        - b
+        - c
 #  - qtype:
 #      free-text
 #    params:
