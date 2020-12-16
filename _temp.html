@@ -73,7 +73,7 @@
 
     
     
-    <p>On a scale from 0 to 10, how much do you like Star-Wars?</p>
+    <p>On a scale from 0 to 25, how much do you like Star-Wars?</p>
 
 </div>
 
@@ -112,21 +112,106 @@
 
         <div class="my-2">
             <input type="text" class="js-range-slider" value="" id="starwarslove"
-                   name="starwarslove"/>
+                   name="starwarslove"
+                   data-min="0"
+                   data-max="25"
+                   data-step="2"
+
+            />
         </div>
         <script>
-            const sliderStep =2;
-            const sliderMin = 0;
-            const sliderMax = 25;
-            const sliderMid = (sliderMin + sliderMax) / 2;
+            $(function () {
+                const slider=$("#starwarslove")
+                const sliderMin=slider.data('min')
+                const sliderMax=slider.data('max')
+                slider.ionRangeSlider({
+                    min: sliderMin,
+                    max: sliderMax,
+                    step: $(this).data('step'),
+                    skin: "big",
+                    from: (sliderMin+sliderMax)/2
+                });
+                
+            })
 
-            $("#starwarslove").ionRangeSlider({
-                min: 0,
-                max: 25,
-                step: sliderStep,
-                from: sliderMid,
-                skin: "big"
-            });
+
+        </script>
+
+
+    </div>
+
+
+                        
+                        <hr>
+<div class="title d-flex align-items-baseline">
+    
+        
+            <span class="qid mr-2">3:</span>
+        
+
+    
+    
+    <p>On a scale from 0 to 10, what do you think about Donald Trump?</p>
+
+</div>
+
+    
+        <style>
+            .myimg {
+                max-width: 100%;
+                max-height: 100%;
+                display: block;
+            }
+
+            .imgcard {
+                width: 250px;
+
+            }
+        </style>
+        <div class="card">
+            <div class="card-body imgcard">
+
+                <img
+                        class="myimg"
+                        src="https://www.whitehouse.gov/wp-content/uploads/2017/11/President-Trump-Official-Portrait-1024x1297.jpg"
+                        height="100px"
+                        width="auto"
+                        alt="Image here">
+            </div>
+        </div>
+
+
+    
+
+
+
+
+    <div class="">
+
+        <div class="my-2">
+            <input type="text" class="js-range-slider" value="" id="whatever"
+                   name="whatever"
+                   data-min="0"
+                   data-max="10"
+                   data-step="1"
+
+            />
+        </div>
+        <script>
+            $(function () {
+                const slider=$("#whatever")
+                const sliderMin=slider.data('min')
+                const sliderMax=slider.data('max')
+                slider.ionRangeSlider({
+                    min: sliderMin,
+                    max: sliderMax,
+                    step: $(this).data('step'),
+                    skin: "big",
+                    from: (sliderMin+sliderMax)/2
+                });
+                
+            })
+
 
         </script>
 

@@ -9,21 +9,28 @@
 
         <div class="my-2">
             <input type="text" class="js-range-slider" value="" id="{{ data.name }}"
-                   name="{{ data.name }}"/>
+                   name="{{ data.name }}"
+                   data-min="{{ data.min }}"
+                   data-max="{{ data.max }}"
+                   data-step="{{ data.step|default('null') }}"
+
+            />
         </div>
         <script>
-            const sliderStep ={{ data.step|default('null') }};
-            const sliderMin = {{data.min}};
-            const sliderMax = {{data.max}};
-            const sliderMid = (sliderMin + sliderMax) / 2;
+            $(function () {
+                const slider=$("#{{ data.name }}")
+                const sliderMin=slider.data('min')
+                const sliderMax=slider.data('max')
+                slider.ionRangeSlider({
+                    min: sliderMin,
+                    max: sliderMax,
+                    step: $(this).data('step'),
+                    skin: "big",
+                    from: (sliderMin+sliderMax)/2
+                });
 
-            $("#{{ data.name }}").ionRangeSlider({
-                min: {{data.min}},
-                max: {{data.max}},
-                step: sliderStep,
-                from: sliderMid,
-                skin: "big"
-            });
+            })
+
 
         </script>
 

@@ -19,10 +19,20 @@ questions:
       image: https://i.etsystatic.com/6333298/r/il/f9bece/1265756662/il_794xN.1265756662_ravj.jpg
       name: starwarslove
       title:
-        On a scale from 0 to 10, how much do you like Star-Wars?
+        On a scale from 0 to 25, how much do you like Star-Wars?
       min: 0
       max: 25
       step: 2
+  - qtype:
+      slidebar
+    params:
+      image: https://www.whitehouse.gov/wp-content/uploads/2017/11/President-Trump-Official-Portrait-1024x1297.jpg
+      name: whatever
+      title:
+        On a scale from 0 to 10, what do you think about Donald Trump?
+      min: 0
+      max: 10
+      step: 1
 #  - qtype:
 #      free-text
 #    params:
