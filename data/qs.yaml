@@ -1,7 +1,7 @@
 title:
   HIT EXAMPLE 222
 description:
-  My Hit Description
+  HIT
 keywords:
   keyword1, keyword 2
 
@@ -12,70 +12,3 @@ questions:
     params:
       name: mood
       title: 'What is your mood today?'
-      qid: 1a
-  - qtype:
-      slidebar
-    params:
-      image: https://i.etsystatic.com/6333298/r/il/f9bece/1265756662/il_794xN.1265756662_ravj.jpg
-      name: starwarslove
-      title:
-        On a scale from 0 to 25, how much do you like Star-Wars?
-      min: 0
-      max: 25
-      step: 2
-  - qtype:
-      slidebar
-    params:
-      image: https://www.whitehouse.gov/wp-content/uploads/2017/11/President-Trump-Official-Portrait-1024x1297.jpg
-      name: whatever
-      title:
-        On a scale from 0 to 10, what do you think about Donald Trump?
-      min: 0
-      max: 10
-      step: 1
-  - qtype:
-      free-text
-    params:
-      name: state
-      pattern: '^[a-zA-Z]{1,2}$'
-      error_message: please type a TWO-LETTER state abbreviation
-      title: 'Please provide the two-letter abbreviation of the US state that you live in:'
-  - qtype:
-      number
-    params:
-      name: age
-      title: What is your age?
-  - qtype:
-      matrix
-    params:
-      name: check_matrix
-      title:
-        "Matrix"
-      rows:
-        - 1
-        - 2
-        - 3
-        - 4
-      columns:
-        - a
-        - b
-        - c
-#  - qtype:
-#      free-text
-#    params:
-#      image: https://i.etsystatic.com/6333298/r/il/f9bece/1265756662/il_794xN.1265756662_ravj.jpg
-#      title: What's your favorite [national park](https://en.wikipedia.org/wiki/List_of_national_parks_of_the_United_States)?
-#      name: national_park
-#      label: Type the name of your national park here
-#
-#  - qtype:
-#      dropdown
-#    params:
-#      name: dropdown1example
-#      title: What would you like to do
-#      choices:
-#        - dance
-#        - work
-#        - sleep
-#        - rest
-#        - watch movies

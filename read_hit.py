@@ -8,7 +8,7 @@ from utils.objs import AttrDict, printj
 import json
 import pathlib, os
 import xml.etree.ElementTree as ET
-
+import xmltodict
 BASE_PATH = pathlib.Path(__file__).parent.absolute()
 
 from jinja2 import Environment, FileSystemLoader
@@ -70,17 +70,32 @@ hits = [
     # '3XQ4XW3OD9C6OBMIT7TU1EEAXX3S26',
     # '3UEDKCTP9VQFMT6GUA1N6J48RJCK7X',
     # '3OB6JN3A9QPKU0QYO0C9QDNCH01MR3',
-    '3TC2K6WKAN69FA0ICVCZKBHZJN928G',
+    '31KSVEGZ4BW19VDLPO76ZZSTEDARW0',
     # '3IHWR4LC7DDSGCLB4C8H73LQAZTI87'
 ]
 for hitid in hits:
 # hitid=input('Enter hit id:\n')
-    print( mturk_client.list_assignments_for_hit(HITId=hitid))
-    assignments = mturk_client.list_assignments_for_hit(HITId=hitid)['Assignments']
+#     print( mturk_client.list_assignments_for_hit(HITId=hitid))
+    assignments = mturk_client.list_assignments_for_hit(HITId=hitid,AssignmentStatuses=['Submitted'])['Assignments']
+    print(assignments)
+
 
     answers = []
     answers_namespace = {'mt': 'http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionFormAnswers.xsd'}
+    print(f' Total number of submttied and unapproved assignments: {len(assignments)}')
     for assignment in assignments:
-        root = ET.fromstring(assignment['Answer'])
-        answers.extend(json.loads(root.find('mt:Answer', answers_namespace).find('mt:FreeText', answers_namespace).text))
-    print(answers)
+        print(f"Asssignment, {assignment.get('AssignmentId')}")
+        answer_dict = xmltodict.parse(assignment['Answer'])
+        answer = json.loads(answer_dict['QuestionFormAnswers']['Answer']['FreeText'])[0]
+        original_link = answer.get('original_link')
+        user_answer = answer.get('companyName')
+        if original_link!=user_answer:
+            assid = assignment.get('AssignmentId')
+            print('gonna approve assignment', assid)
+            mturk_client.approve_assignment(
+                AssignmentId=assid
+            )
+        # print(root.find('mt:Answer', answers_namespace).text)
+        # print('jopa' , root.find('mt:Answer', answers_namespace).find('mt:FreeText', answers_namespace).text)
+    #     answers.extend(json.loads(root.find('mt:Answer', answers_namespace).find('mt:FreeText', answers_namespace).text))
+    # print(answers)

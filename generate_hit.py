@@ -55,24 +55,26 @@ def render_question(item, qid=None):
 mturk_client = get_mturk_client(use_sandbox=True)
 
 
-def make_hit_from_template(survey):
+def make_hit_from_template(link):
     main_file_loader = FileSystemLoader('templates')
     main_env = Environment(loader=main_file_loader)
-
     template = main_env.get_template('q.html')
-    form_elements = []
-    for i, q in enumerate(survey.questions, start=1):
-        form_elements.append(render_question(AttrDict(**q), i))
-    html_question = template.render(dict(form_elements=form_elements))
+    html_question = template.render(dict(link=link))
+
+
+
+
+
+
     with open('_temp.html', 'w') as filehandle:
         filehandle.write(html_question)
     # return
     # We may need to take the title and description and keywords and all other params from the survey file.
     # Let's keep it simple so far
     mturk_hit_parameters = {
-        'Title': survey.title,
-        'Description': survey.description,
-        'Keywords': survey.keywords,
+        'Title': 'survey.title',
+        'Description': 'survey.description',
+        'Keywords': 'survey.keywords',
         'MaxAssignments': 1,
         'Reward': '0.1',
         'AssignmentDurationInSeconds': 6000,
@@ -87,10 +89,9 @@ def make_hit_from_template(survey):
 
 # here we change the file name that points to the survey
 survey_file = 'qs.yaml'
-with open(f'./data/{survey_file}') as file:
-    survey = yaml.load(file, Loader=yaml.FullLoader)
-survey = AttrDict(**survey)
-for i in range(1):
-    h = make_hit_from_template(survey)
+
+with open('data/urls.csv') as f:
+    link = 'https://www.linkedin.com/in/jopa_mira'
+    h = make_hit_from_template(link)
     if h:
         print('HIT id:', h.HITId, 'GOTO:', f'https://workersandbox.mturk.com/mturk/preview?groupId={h.HITGroupId}')
